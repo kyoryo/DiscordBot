@@ -381,15 +381,33 @@ namespace NadekoBot.Classes
         public static async Task<string> GetTosBaseItemLink(string query)
         {
             var _query = query.Replace(" ", "+");
-            var link = "http://www.tosbase.com/database/items/?item_name="+_query;
+            var baselink = "http://www.tosbase.com/database/items/";
+            var link = baselink+ "?item_name=" + _query;
             var webpage = await GetResponseStringAsync(link).ConfigureAwait(false);
-            var matches = Regex.Matches(webpage, "href=\"database/items/(?<url>[\\d]*?)/\"");
+            MatchCollection matches = Regex.Matches(webpage, "href=\"database/items/(?<url>[\\d]*?)/\"");
             if (matches.Count == 0)
                 return null;
+            else if (matches.Count > 1)
+                return matches.Count + " items has been found.\n" + link;
             else
-                return "http://www.tosbase.com/database/items/" + matches[0].Groups["url"].Value;
+                return baselink + matches[0].Groups["url"].Value;
+                //return matches;
             //return link;
 
+        }
+        public static async Task<string> GetTosNeetAttributesLink(string query)
+        {
+            var _query = query.Replace(" ", "+");
+            var baselink = "https://tos.neet.tv/";
+            var link = baselink + "?q=" + _query;
+            var webpage = await GetResponseStringAsync(link).ConfigureAwait(false);
+            MatchCollection matches = Regex.Matches(webpage, "href=\"/attributes/(?<url>[\\d]*?)\"");
+            if (matches.Count == 0)
+                return null;
+            else if (matches.Count > 1)
+                return matches.Count + " items has been found.\n" + link;
+            else
+                return baselink + "attributes/" + matches[0].Groups["url"].Value;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace NadekoBot.Modules.TreeOfSavior
             {
                 x.AddCheck(PermissionChecker.Instance);
                 x.CreateCommand(Prefix + "tosbase")
-                    .Description("Display list of items from tosbase")
+                    .Description("Display top 5 tosbase items from your query")
                     .Parameter("query", ParameterType.Unparsed)
                     .Do(async e =>
                     {
@@ -33,6 +33,28 @@ namespace NadekoBot.Modules.TreeOfSavior
                         }
                         
                         await e.Channel.SendMessage(String.Join("\n", links)).ConfigureAwait(false);
+                    });
+            });
+            manager.CreateCommands("", x =>
+            {
+                x.AddCheck(PermissionChecker.Instance);
+                x.CreateCommand(Prefix + "tosneetattrib")
+                    .Description("Display top 5(WIP) tosneet attributes from your query")
+                    .Parameter("query", ParameterType.Unparsed)
+                    .Do(async e =>
+                    {
+
+                        var query = e.GetArg("query")?.Trim() ?? "";
+                        var links = await Task.WhenAll(SearchHelper.GetTosNeetAttributesLink(query)).ConfigureAwait(false);
+
+                        if (links.All(l => l == null))
+                        {
+                            await e.Channel.SendMessage("`No results.`");
+                            return;
+                        }
+
+                        await e.Channel.SendMessage(String.Join("\n", links)).ConfigureAwait(false);
+
                     });
             });
             //throw new NotImplementedException();
