@@ -377,5 +377,19 @@ namespace NadekoBot.Classes
                                       .Select(ig => string.Concat(ig.Select(el => howToPrint(el)))))
                                       + $"\n```";
         }
+
+        public static async Task<string> GetTosBaseItemLink(string query)
+        {
+            var _query = query.Replace(" ", "+");
+            var link = "http://www.tosbase.com/database/items/?item_name="+_query;
+            var webpage = await GetResponseStringAsync(link).ConfigureAwait(false);
+            var matches = Regex.Matches(webpage, "href=\"database/items/(?<url>[\\d]*?)/\"");
+            if (matches.Count == 0)
+                return null;
+            else
+                return "http://www.tosbase.com/database/items/" + matches[0].Groups["url"].Value;
+            //return link;
+
+        }
     }
 }

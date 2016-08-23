@@ -336,7 +336,7 @@ $@"🌍 **Weather for** 【{obj["target"]}】
                       }
                       catch
                       {
-                          await e.Channel.SendMessage("💢 Failed finidng a definition for that tag.").ConfigureAwait(false);
+                          await e.Channel.SendMessage("💢 Failed finding a definition for that tag.").ConfigureAwait(false);
                       }
                   });
 

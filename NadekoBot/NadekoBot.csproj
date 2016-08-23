@@ -200,6 +200,7 @@
     <Compile Include="Modules\Searches\Commands\MemegenCommands.cs" />
     <Compile Include="Modules\Searches\Commands\OsuCommands.cs" />
     <Compile Include="Modules\Searches\Commands\PokemonSearchCommands.cs" />
+    <Compile Include="Modules\TreeOfSavior\TreeOfSaviorModule.cs" />
     <Compile Include="Modules\Utility\UtilityModule.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="_Models\DataModels\TestDataModel.cs" />

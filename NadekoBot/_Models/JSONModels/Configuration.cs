@@ -205,7 +205,7 @@ Nadeko Support Server: <https://discord.gg/0ehQwTK2RBjAxzEY>";
         public string Programming { get; set; } = "%";
         public string Pokemon { get; set; } = ">";
         public string Utility { get; set; } = ".";
-        public string TreeOfSavior { get; set; } = "!tos ";
+        public string TreeOfSavior { get; set; } = "!";
     }
 
     public static class ConfigHandler

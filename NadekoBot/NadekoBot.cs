@@ -21,6 +21,7 @@ using NadekoBot.Modules.Permissions.Classes;
 using NadekoBot.Modules.Pokemon;
 using NadekoBot.Modules.Searches;
 using NadekoBot.Modules.Translator;
+using NadekoBot.Modules.TreeOfSavior;
 using NadekoBot.Modules.Trello;
 using NadekoBot.Modules.Utility;
 using Newtonsoft.Json;
@@ -179,6 +180,7 @@ namespace NadekoBot
             modules.Add(new PokemonModule(), "Pokegame", ModuleFilter.None);
             modules.Add(new TranslatorModule(), "Translator", ModuleFilter.None);
             modules.Add(new CustomReactionsModule(), "Customreactions", ModuleFilter.None);
+            modules.Add(new TreeOfSaviorModule(), "TOS", ModuleFilter.None);
             if (!string.IsNullOrWhiteSpace(Creds.TrelloAppKey))
                 modules.Add(new TrelloModule(), "Trello", ModuleFilter.None);
 
