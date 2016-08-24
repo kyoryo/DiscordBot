@@ -16,7 +16,8 @@ namespace NadekoBot.Modules.Administration.Commands
 {
     internal class PlayingRotate : DiscordCommand
     {
-        private static readonly Timer timer = new Timer(20000);
+        private static readonly Random rng = new Random();
+        private static readonly Timer timer = new Timer(rng.Next(200000,900000));
 
         public static Dictionary<string, Func<string>> PlayingPlaceholders { get; } =
             new Dictionary<string, Func<string>> {

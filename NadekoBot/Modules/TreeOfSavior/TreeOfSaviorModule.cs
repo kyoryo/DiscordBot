@@ -25,20 +25,29 @@ namespace NadekoBot.Modules.TreeOfSavior
                     {
                         var query = e.GetArg("query")?.Trim() ?? "";
                         var links = await Task.WhenAll(SearchHelper.GetTosBaseItemLink(query)).ConfigureAwait(false);
-
+                        
                         if (links.All(l => l == null))
                         {
                             await e.Channel.SendMessage("`No results.`");
                             return;
                         }
-                        
-                        await e.Channel.SendMessage(String.Join("\n", links)).ConfigureAwait(false);
+                        //redundant
+                        foreach (var li in links)
+                        {
+                            foreach (var l in li)
+                            {
+                                var _links = l;
+                                await e.Channel.SendMessage(_links).ConfigureAwait(false);
+                            }
+                        }
+                        //await e.Channel.SendMessage(String.Join("\n", links)).ConfigureAwait(false);
                     });
             });
             manager.CreateCommands("", x =>
             {
                 x.AddCheck(PermissionChecker.Instance);
-                x.CreateCommand(Prefix + "tosneetattrib")
+                x.CreateCommand(Prefix + "tosneetattributes")
+                    .Alias(Prefix + "tna")
                     .Description("Display top 5(WIP) tosneet attributes from your query")
                     .Parameter("query", ParameterType.Unparsed)
                     .Do(async e =>

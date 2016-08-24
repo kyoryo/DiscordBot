@@ -378,7 +378,7 @@ namespace NadekoBot.Classes
                                       + $"\n```";
         }
 
-        public static async Task<string> GetTosBaseItemLink(string query)
+        public static async Task<string[]> GetTosBaseItemLink(string query)
         {
             var _query = query.Replace(" ", "+");
             var baselink = "http://www.tosbase.com/database/items/";
@@ -387,12 +387,15 @@ namespace NadekoBot.Classes
             MatchCollection matches = Regex.Matches(webpage, "href=\"database/items/(?<url>[\\d]*?)/\"");
             if (matches.Count == 0)
                 return null;
-            else if (matches.Count > 1)
-                return matches.Count + " items has been found.\n" + link;
+            //else if (matches.Count > 1)
+            //    return matches.Count + " items has been found.\n" + link;
             else
-                return baselink + matches[0].Groups["url"].Value;
-                //return matches;
-            //return link;
+            {
+                var arr = matches.Cast<Match>().Select(m => baselink + m.Groups["url"].Value).Take(5).ToArray();
+                return arr;
+            }
+                
+                //return matches[0].Groups["url"].Value;
 
         }
         public static async Task<string> GetTosNeetAttributesLink(string query)
