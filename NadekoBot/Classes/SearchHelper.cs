@@ -398,7 +398,7 @@ namespace NadekoBot.Classes
                 //return matches[0].Groups["url"].Value;
 
         }
-        public static async Task<string> GetTosNeetAttributesLink(string query)
+        public static async Task<string[]> GetTosNeetAttributesLink(string query)
         {
             var _query = query.Replace(" ", "+");
             var baselink = "https://tos.neet.tv/";
@@ -407,10 +407,47 @@ namespace NadekoBot.Classes
             MatchCollection matches = Regex.Matches(webpage, "href=\"/attributes/(?<url>[\\d]*?)\"");
             if (matches.Count == 0)
                 return null;
-            else if (matches.Count > 1)
-                return matches.Count + " items has been found.\n" + link;
             else
-                return baselink + "attributes/" + matches[0].Groups["url"].Value;
+            {
+                var arr = matches.Cast<Match>().Select(m => baselink + "attributes/" + m.Groups["url"].Value).Take(5).ToArray();
+                return arr;
+            }
+            //else if (matches.Count > 1)
+            //    return matches.Count + " items has been found.\n" + link;
+            //else
+            //    return baselink + "attributes/" + matches[0].Groups["url"].Value;
+        }
+        public static async Task<string[]> GetTosNeetItemsLink(string query)
+        {
+            var _query = query.Replace(" ", "+");
+            var baselink = "https://tos.neet.tv/";
+            var link = baselink + "?q=" + _query;
+            var webpage = await GetResponseStringAsync(link).ConfigureAwait(false);
+            MatchCollection matches = Regex.Matches(webpage, "href=\"/items/(?<url>[\\d]*?)\"");
+            if (matches.Count == 0)
+                return null;
+            else
+            {
+                var arr = matches.Cast<Match>().Select(m => baselink + "items/" + m.Groups["url"].Value).Take(5).ToArray();
+                return arr;
+            }
+        }
+        public static async Task<string[]> GetTosNeetZonesLink(string query)
+        {
+            var _query = query.Replace(" ", "+");
+            var baselink = "https://tos.neet.tv/";
+            var link = baselink + "?q=" + _query;
+            var webpage = await GetResponseStringAsync(link).ConfigureAwait(false);
+            MatchCollection matches = Regex.Matches(webpage, "href=\"/zones/(?<url>[\\d]*?)\"");
+            if (matches.Count == 0)
+                return null;
+            //else if (matches.Count > 1)
+            //    return matches.Count + " zones has been found.\n" + link;
+            else
+            {
+                var arr = matches.Cast<Match>().Select(m => baselink + "zones/" + m.Groups["url"].Value).Take(5).ToArray();
+                return arr;
+            }
         }
     }
 }

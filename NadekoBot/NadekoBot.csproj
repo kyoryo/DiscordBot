@@ -200,11 +200,14 @@
     <Compile Include="Modules\Searches\Commands\MemegenCommands.cs" />
     <Compile Include="Modules\Searches\Commands\OsuCommands.cs" />
     <Compile Include="Modules\Searches\Commands\PokemonSearchCommands.cs" />
+    <Compile Include="Modules\TreeOfSavior\Commands\WorldBoss.cs" />
     <Compile Include="Modules\TreeOfSavior\TreeOfSaviorModule.cs" />
     <Compile Include="Modules\Utility\UtilityModule.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="_Models\DataModels\TestDataModel.cs" />
     <Compile Include="_Models\DataModels\Incident.cs" />
+    <Compile Include="_Models\DataModels\TOSWorldBossModel.cs" />
+    <Compile Include="_Models\DataModels\WorldbossModel.cs" />
     <Compile Include="_Models\JSONModels\AnimeResult.cs" />
     <Compile Include="_Models\JSONModels\Configuration.cs" />
     <Compile Include="Modules\Searches\Commands\WowJokes.cs" />
