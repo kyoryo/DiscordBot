@@ -16,10 +16,10 @@ namespace NadekoBot.Modules.TreeOfSavior
 {
     internal class TreeOfSaviorModule : DiscordModule
     {
-        public TreeOfSaviorModule()
-        {
-            commands.Add(new WorldBoss(this));
-        }
+        //public TreeOfSaviorModule()
+        //{
+        //    commands.Add(new WorldBoss(this));
+        //}
         public override string Prefix { get; } = NadekoBot.Config.CommandPrefixes.TreeOfSavior;
         public override void Install(ModuleManager manager)
         {
