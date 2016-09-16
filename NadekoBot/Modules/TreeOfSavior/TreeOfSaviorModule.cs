@@ -94,7 +94,6 @@ namespace NadekoBot.Modules.TreeOfSavior
 
                         var query = e.GetArg("query")?.Trim() ?? "";
                         var links = await Task.WhenAll(SearchHelper.GetTosNeetItemsLink(query)).ConfigureAwait(false);
-
                         if (links.All(l => l == null))
                         {
                             await e.Channel.SendMessage("`No results.`");
@@ -155,6 +154,34 @@ namespace NadekoBot.Modules.TreeOfSavior
             manager.CreateCommands("", x =>
             {
                 x.AddCheck(PermissionChecker.Instance);
+                x.CreateCommand(Prefix + "tosneetstatuseffect")
+                .Alias(Prefix + "tns")
+                .Description("")
+                .Parameter("query", ParameterType.Unparsed)
+                .Do(async e =>
+                {
+                    var query = e.GetArg("query")?.Trim() ?? "";
+                    var links = await Task.WhenAll(SearchHelper.GetTosNeetBuffLink(query)).ConfigureAwait(false);
+
+                    if (links.All(l => l == null))
+                    {
+                        await e.Channel.SendMessage("`No results.`");
+                        return;
+                    }
+                    //redundant
+                    foreach (var li in links)
+                    {
+                        foreach (var l in li)
+                        {
+                            var _links = l;
+                            await e.Channel.SendMessage(_links).ConfigureAwait(false);
+                        }
+                    }
+                });
+            });
+            manager.CreateCommands("", x =>
+            {
+                x.AddCheck(PermissionChecker.Instance);
                 x.CreateCommand(Prefix + "worldbossinfo")
                 .Alias(Prefix + "wbi")
                 .Description("Gives you world boss informations")
@@ -162,6 +189,39 @@ namespace NadekoBot.Modules.TreeOfSavior
                 {
                     await e.Channel.SendMessage("https://tos.neet.tv/skill-planner").ConfigureAwait(false);
                 });
+            });
+            manager.CreateCommands("", x =>
+            {
+                x.AddCheck(PermissionChecker.Instance);
+                x.CreateCommand(Prefix + "tosneetquests")
+                    .Alias(Prefix + "tnq")
+                    .Description("Gives you information about quests")
+                    .Parameter("query", ParameterType.Unparsed)
+                    .Do(async e =>
+                    {
+                        var query = e.GetArg("query")?.Trim() ?? "";
+                        var links = await Task.WhenAll(SearchHelper.GetTosNeetQuests(query)).ConfigureAwait(false);
+
+                        if (links.All(l => l == null))
+                        {
+                            await e.Channel.SendMessage("`No results.`");
+                            return;
+                        }
+                        if (links.All(l => l.Count() > 3))
+                        {
+                            await e.Channel.SendMessage("`More than 3 items has been found`");
+                        }
+
+                        foreach (var li in links)
+                        {
+                            foreach (var l in li)
+                            {
+                                var _links = l;
+                                await e.Channel.SendMessage(_links).ConfigureAwait(false);
+                            }
+                        }
+                        await e.Channel.SendMessage("`Please visit https://tos.neet.tv/quests?q=" + query + " for more results`");
+                    });
             });
             //throw new NotImplementedException();
             //manager.CreateCommands("", x =>

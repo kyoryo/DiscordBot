@@ -449,5 +449,40 @@ namespace NadekoBot.Classes
                 return arr;
             }
         }
+        public static async Task<string[]> GetTosNeetBuffLink(string query)
+        {
+            var _query = query.Replace(" ", "+");
+            var baselink = "https://tos.neet.tv/";
+            var link = baselink + "misc/buffs?q=" + _query;
+            var webpage = await GetResponseStringAsync(link).ConfigureAwait(false);
+            MatchCollection matches = Regex.Matches(webpage, "href=\"/misc/buffs/(?<url>[\\d]*?)\"");
+            if (matches.Count == 0)
+                return null;
+            //else if (matches.Count > 1)
+            //    return matches.Count + " zones has been found.\n" + link;
+            else
+            {
+                var arr = matches.Cast<Match>().Select(m => baselink + "misc/buffs/" + m.Groups["url"].Value).Take(5).ToArray();
+                return arr;
+            }
+        }
+        public static async Task<string[]> GetTosNeetQuests(string query)
+        {
+            var _query = query.Replace(" ", "+");
+            var baselink = "https://tos.neet.tv/";
+            var link = baselink + "quests?q=" + _query;
+            var webpage = await GetResponseStringAsync(link).ConfigureAwait(false);
+            MatchCollection matches = Regex.Matches(webpage, "href=\"/quests/(?<url>[\\d]*?)\"");
+            string[] arr;
+            if (matches.Count == 0)
+                return null;
+            //else if (matches.Count > 1)
+            //    return matches.Count + " zones has been found.\n" + link;
+            else
+            {
+                arr = matches.Cast<Match>().Select(m => baselink + "quests/" + m.Groups["url"].Value).Take(5).ToArray();
+                return arr;
+            }
+        }
     }
 }
